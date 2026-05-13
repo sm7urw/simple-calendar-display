@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>På gång i Sjukhuskyrkan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <script src="event.js"></script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #3d5068 url('kalenderbakgrund.png') center center / cover no-repeat;
+      width: 100vw; height: 100vh;
+      display: flex; flex-direction: column;
+    }
+    .clock-wrap {
+      position: absolute; top: 2.8rem; right: 3.5rem; text-align: right;
+      z-index: 100;
+    }
+    .clock-time {
+      font-size: 3.2rem; font-weight: 300;
+      color: rgba(255,255,255,0.95); letter-spacing: 0.04em; line-height: 1;
+    }
+    .clock-date {
+      font-size: 1.1rem; color: rgba(255,255,255,0.65);
+      margin-top: 0.4rem; letter-spacing: 0.06em; text-transform: capitalize;
+    }
+    .content-zone {
+      margin-top: 5%; 
+      flex: 1;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 5% 4% 7%; max-height: 65vh;
+    }
+    .label {
+      font-size: clamp(0.75rem, 1.2vw, 1rem);
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); font-weight: 500; margin-bottom: 1.2rem;
+    }
+    .event-when {
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      color: rgba(255,255,255,0.85); 
+      /* color: #ffeb3b; */
+      margin-bottom: 0.8rem; font-weight: 500;
+      font-style: normal;
+      text-transform: uppercase;
+    }
+    /* Här är förändringen: Ren, kraftfull och modern Inter istället för serifer */
+    .event-title {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-style: normal;
+      font-weight: 700; color: #ffffff; line-height: 1.15;
+      letter-spacing: -0.02em; /* Lite tightare spationering för stora rubriker */
+    }
+    .event-desc {
+      font-size: clamp(1rem, 1.8vw, 1.4rem);
+      color: rgba(255,255,255,0.85);
+      margin-top: 1.5rem;
+      line-height: 1.5;
+      max-width: 85%;
+      font-weight: 400;
+      white-space: pre-line; 
+      font-style: normal;
+    }
+    .no-event {
+      font-size: clamp(1.5rem, 3vw, 2.8rem);
+      color: rgba(255,255,255,0.4); font-style: italic; font-weight: 300;
+    }
+    .loading { color: rgba(255,255,255,0.35); font-size: 1.2rem; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="clock-wrap">
+    <div class="clock-time" id="clock">--:--</div>
+    <div class="clock-date" id="date-str"></div>
+  </div>
+  <div class="content-zone">
+    <div class="label">Nästa aktivitet</div>
+    <div id="event-content" class="loading">Hämtar kalender…</div>
+  </div>
+
+  <script>
+    function updateClock() {
+      try {
+        var now = new Date();
+        document.getElementById('clock').textContent =
+          now.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
+        var d = now.toLocaleDateString('sv-SE', { weekday: 'long', day: 'numeric', month: 'long' });
+        document.getElementById('date-str').textContent = d.charAt(0).toUpperCase() + d.slice(1);
+      } catch(e) { console.error(e); }
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    function fmtTime(date, isAllDay) {
+      var today = new Date();
+      var tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+
+      var dayStr = "";
+      if (date.toDateString() === today.toDateString()) {
+        dayStr = "Idag";
+      } else if (date.toDateString() === tomorrow.toDateString()) {
+        dayStr = "Imorgon";
+      } else {
+        var options = { weekday: 'long', day: 'numeric', month: 'long' };
+        var formatted = date.toLocaleDateString('sv-SE', options);
+        dayStr = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+      }
+
+      if (isAllDay) return dayStr;
+      var t = date.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
+      return dayStr + ' kl.\u00a0' + t;
+    }
+
+    function renderEvent() {
+      var el = document.getElementById('event-content');
+      try {
+        if (typeof calendarData === 'undefined') {
+          el.innerHTML = '<div class="no-event" style="opacity:.3">Kunde inte ladda kalenderdata</div>';
+          return;
+        }
+
+        if (calendarData.error) {
+          el.innerHTML = '<div class="no-event">' + calendarData.error + '</div>';
+          return;
+        }
+
+        var cleanStart = calendarData.start.replace(/([+-]\d{2}):\d{2}$/, "Z");
+        var startData = new Date(cleanStart);
+        
+        el.innerHTML =
+          '<div class="event-when">' + fmtTime(startData, calendarData.all_day) + '</div>' +
+          '<div class="event-title">' + calendarData.title + '</div>' +
+          (calendarData.desc ? '<div class="event-desc">' + calendarData.desc + '</div>' : '');
+
+      } catch (err) {
+        console.error(err);
+        el.innerHTML = '<div class="no-event" style="opacity:.3">Inga kommande aktiviteter</div>';
+      }
+    }
+
+    renderEvent();
+    
+    setInterval(function() {
+      window.location.reload();
+    }, 5 * 60 * 1000);
+  </script>
+</body>
+</html>
