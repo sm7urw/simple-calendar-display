@@ -1,5 +1,3 @@
-
-
 # Simple Calendar Display
 
 A clean, minimalist digital signage solution designed for Raspberry Pi. This project fetches events from a Google Calendar (iCal) and displays the next upcoming event with a beautiful, high-readability interface. The repo runs locally and the index.html file is added as an asset in [Anthias](https://github.com/Screenly/Anthias).
@@ -19,6 +17,10 @@ Please support my work: [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20M
 * **Backend**: Python 3 (with `icalevents`)
 * **Frontend**: HTML5, CSS3, Vanilla JavaScript
 * **Environment**: Raspberry Pi (Tested on Anthias/Screenly)
+
+## Screenshot
+
+![Simple Calendar Display Screenshot](screenshot.png)
 
 ## Installation
 
