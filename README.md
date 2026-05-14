@@ -1,22 +1,24 @@
 # Simple Calendar Display
 
-A clean, minimalist digital signage solution designed for Raspberry Pi. This project fetches events from a Google Calendar (iCal) and displays the next upcoming event with a beautiful, high-readability interface. The repo runs locally and the index.html file is added as an asset in Anthias.
+A clean, minimalist digital signage solution designed for Raspberry Pi. This project fetches events from a Google Calendar (iCal) and displays the next upcoming event with a beautiful, high-readability interface. The repo runs locally and the index.html file is added as an asset in [Anthias](https://github.com/Screenly/Anthias).
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+### Support
+Please support my work: [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-orange?style=flat-square&logo=buy-me-a-coffee)](https://www.buymeacoffee.com/sm7urw)
 
-## ✨ Features
+## Features
 * **Automated Sync**: Background Python script fetches iCal data every 5 minutes.
 * **Robust Architecture**: Saves data as a JS variable to bypass browser CORS and local file restrictions.
 * **Modern UI**: High-legibility design optimized for digital signage screens.
 * **Auto-Clock**: Real-time digital clock with localized date formatting.
 * **Self-Healing**: Automatically reloads to ensure the data is always fresh.
+* **Runs parallell to Anthias**: Repo runs on the same RPi as Anthias.
 
-## 🛠 Tech Stack
+## Tech Stack
 * **Backend**: Python 3 (with `icalevents`)
 * **Frontend**: HTML5, CSS3, Vanilla JavaScript
 * **Environment**: Raspberry Pi (Tested on Anthias/Screenly)
 
-## 🚀 Installation
+## Installation
 
 ### 1. Clone the repository
 \`\`\`bash
@@ -37,17 +39,17 @@ Open \`update_calendar.py\` and replace the \`ICAL_URL\` with your private Googl
 nano update_calendar.py
 \`\`\`
 
-## 📅 Automation (Cron)
+## Automation (Cron)
 The installation script automatically adds a cronjob to update the calendar every 5 minutes. If you need to add it manually, use:
 \`\`\`text
 */5 * * * * cd $HOME/simple-calendar-display && ./venv/bin/python update_calendar.py
 \`\`\`
 
-## 🖥 Display Setup
+## Display Setup
 Point your signage player or browser to the Raspberry Pi's IP address on port \`8080\`. 
 
 If using **Anthias**, simply add the local URL as a "Web Asset".
 
-## 📄 License
+## License
 This project is open source and available under the [MIT License](LICENSE).
 EOF
