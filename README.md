@@ -58,4 +58,9 @@ If using **Anthias**, simply add the local URL as a "Web Asset".
 
 ## License
 This project is open source and available under the [MIT License](LICENSE).
+
+<p align="center">
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=sm7urw.simple-calendar-display" alt="visitor badge">
+</p>
+
 EOF
