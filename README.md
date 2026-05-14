@@ -20,7 +20,9 @@ Please support my work: [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20M
 
 ## Screenshot
 
-![Simple Calendar Display Screenshot](screenshot.png)
+<p align="left">
+  <img src="screenshot.png" alt="Simple Calendar Display" width="600">
+</p>
 
 ## Installation
 
