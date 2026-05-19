@@ -63,5 +63,5 @@ This project is open-source and available under the MIT License.
 </p>
 
 <p align="center">
-  <img src="https://profile-counter.glitch.me/sm7urw/count.svg" alt="Visitor Count">
+  <img src="https://count.getloli.com/get/@sm7urw-calendar" alt="Visitor Count">
 </p>
