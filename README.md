@@ -63,5 +63,5 @@ This project is open-source and available under the MIT License.
 </p>
 
 <p align="center">
-  <img src="https://count.getloli.com/get/@sm7urw-calendar" alt="Visitor Count">
+  <img src="https://komarev.com/ghpvc/?username=sm7urw&label=Views&color=blue&style=flat-square" alt="Visitor Count">
 </p>
