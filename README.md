@@ -53,3 +53,15 @@ Once the server is running, you can access the calendar and the configuration pa
 
 ## License
 This project is open-source and available under the MIT License.
+
+---
+
+<p align="center">
+  <a href="https://www.buymeacoffee.com/sm7urw" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 42px !important; width: 172px !important;" >
+  </a>
+</p>
+
+<p align="center">
+  <img src="https://profile-counter.glitch.me/sm7urw/count.svg" alt="Visitor Count">
+</p>
