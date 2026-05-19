@@ -43,17 +43,15 @@
     .event-when {
       font-size: clamp(1.2rem, 2.5vw, 1.8rem);
       color: rgba(255,255,255,0.85); 
-      /* color: #ffeb3b; */
       margin-bottom: 0.8rem; font-weight: 500;
       font-style: normal;
       text-transform: uppercase;
     }
-    /* Här är förändringen: Ren, kraftfull och modern Inter istället för serifer */
     .event-title {
       font-size: clamp(2.5rem, 6vw, 5rem);
       font-style: normal;
       font-weight: 700; color: #ffffff; line-height: 1.15;
-      letter-spacing: -0.02em; /* Lite tightare spationering för stora rubriker */
+      letter-spacing: -0.02em;
     }
     .event-desc {
       font-size: clamp(1rem, 1.8vw, 1.4rem);
@@ -78,7 +76,7 @@
     <div class="clock-date" id="date-str"></div>
   </div>
   <div class="content-zone">
-    <div class="label">Nästa aktivitet</div>
+    <div class="label" id="main-title">Nästa aktivitet</div>
     <div id="event-content" class="loading">Hämtar kalender…</div>
   </div>
 
@@ -106,14 +104,13 @@
       } else if (date.toDateString() === tomorrow.toDateString()) {
         dayStr = "Imorgon";
       } else {
-        var options = { weekday: 'long', day: 'numeric', month: 'long' };
-        var formatted = date.toLocaleDateString('sv-SE', options);
-        dayStr = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+        var options = { day: 'numeric', month: 'long' };
+        dayStr = date.toLocaleDateString('sv-SE', options);
       }
 
       if (isAllDay) return dayStr;
       var t = date.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
-      return dayStr + ' kl.\u00a0' + t;
+      return dayStr + '  ' + t;
     }
 
     function renderEvent() {
@@ -131,16 +128,42 @@
 
         var cleanStart = calendarData.start.replace(/([+-]\d{2}):\d{2}$/, "Z");
         var startData = new Date(cleanStart);
-        
+         
         el.innerHTML =
-          '<div class="event-when">' + fmtTime(startData, calendarData.all_day) + '</div>' +
-          '<div class="event-title">' + calendarData.title + '</div>' +
-          (calendarData.desc ? '<div class="event-desc">' + calendarData.desc + '</div>' : '');
+          '<div class="event-when" id="event-date-el">' + fmtTime(startData, calendarData.all_day) + '</div>' +
+          '<div class="event-title" id="event-title-el">' + calendarData.title + '</div>' +
+          (calendarData.desc ? '<div class="event-desc" id="event-desc-el">' + calendarData.desc + '</div>' : '');
 
       } catch (err) {
         console.error(err);
         el.innerHTML = '<div class="no-event" style="opacity:.3">Inga kommande aktiviteter</div>';
+      } finally {
+        applyFontSizes();
       }
+    }
+
+    function applyFontSizes() {
+      fetch('/api/config')
+        .then(function(response) { return response.json(); })
+        .then(function(config) {
+          if (config.title_size) document.getElementById('main-title').style.fontSize = config.title_size + 'px';
+          if (config.clock_size) document.getElementById('clock').style.fontSize = config.clock_size + 'px';
+          
+          var tEl = document.getElementById('event-title-el');
+          var dEl = document.getElementById('event-desc-el');
+          var wEl = document.getElementById('event-date-el');
+
+          if (tEl && config.event_title_size) tEl.style.fontSize = config.event_title_size + 'px';
+          if (dEl && config.event_desc_size) dEl.style.fontSize = config.event_desc_size + 'px';
+          if (wEl && config.event_desc_size) wEl.style.fontSize = config.event_desc_size + 'px';
+
+          if (config.title_color) document.getElementById('main-title').style.color = config.title_color;
+          if (config.clock_color) document.getElementById('clock').style.color = config.clock_color;
+          if (tEl && config.event_title_color) tEl.style.color = config.event_title_color;
+          if (wEl && config.event_desc_color) wEl.style.color = config.event_desc_color;
+          if (dEl && config.event_desc_color) dEl.style.color = config.event_desc_color;
+        })
+        .catch(function(err) { console.error('Kunde inte hämta inställningar:', err); });
     }
 
     renderEvent();
