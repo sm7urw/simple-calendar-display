@@ -1,66 +1,55 @@
 # Simple Calendar Display
 
-A clean, minimalist digital signage solution designed for Raspberry Pi. This project fetches events from a Google Calendar (iCal) and displays the next upcoming event with a beautiful, high-readability interface. The repo runs locally and the index.html file is added as an asset in [Anthias](https://github.com/Screenly/Anthias).
+A clean, modern, and lightweight digital calendar display designed for Raspberry Pi and single-board computers. It fetches events from a private iCal link and presents them in a beautiful, minimalist interface with a live clock. 
 
-### Support
-Please support my work: [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-orange?style=flat-square&logo=buy-me-a-coffee)](https://www.buymeacoffee.com/sm7urw)
+Now features a built-in Web GUI to easily customize text sizes and colors in real-time from any device on your network!
+
+![Simple Calendar Display Screenshot](screenshot.png)
 
 ## Features
-* **Automated Sync**: Background Python script fetches iCal data every 5 minutes.
-* **Robust Architecture**: Saves data as a JS variable to bypass browser CORS and local file restrictions.
-* **Modern UI**: High-legibility design optimized for digital signage screens.
-* **Auto-Clock**: Real-time digital clock with localized date formatting.
-* **Self-Healing**: Automatically reloads to ensure the data is always fresh.
-* **Runs parallell to Anthias**: Repo runs on the same RPi as Anthias.
+* Live iCal Sync: Automatically fetches and formats your upcoming calendar events.
+* Digital Clock: Beautiful, minimalist real-time clock and date display.
+* Web-based Settings: Change text sizes and colors on the fly via a dedicated web interface—no coding or CSS tweaking required.
+* Responsive Design: Looks great on everything from small monitor hacks to dedicated wall tablets.
 
-## Tech Stack
-* **Backend**: Python 3 (with `icalevents`)
-* **Frontend**: HTML5, CSS3, Vanilla JavaScript
-* **Environment**: Raspberry Pi (Tested on Anthias/Screenly)
+---
 
-## Screenshot
-
-<p align="left">
-  <img src="screenshot.png" alt="Simple Calendar Display" width="600">
-</p>
-
-## Installation
+## Installation & Setup
 
 ### 1. Clone the repository
-\`\`\`bash
 git clone https://github.com/sm7urw/simple-calendar-display.git
 cd simple-calendar-display
-\`\`\`
 
-### 2. Run the Installer
-The included script will install system dependencies, setup the Python virtual environment, and configure permissions:
-\`\`\`bash
-chmod +x install_calendar.sh
-./install_calendar.sh
-\`\`\`
+### 2. Configure your Calendar Link
+Create a file named .env in the project root folder and add your private iCal URL:
+CALENDAR_URL="https://your-calendar-provider.com/private/link.ics"
 
-### 3. Configuration
-Open \`update_calendar.py\` and replace the \`ICAL_URL\` with your private Google Calendar iCal link:
-\`\`\`bash
-nano update_calendar.py
-\`\`\`
+### 3. Setup Virtual Environment & Dependencies
+Create a Python virtual environment and install the required packages (including Flask and icalevents):
+python3 -m venv venv
+source venv/bin/activate
+pip install Flask icalevents
 
-## Automation (Cron)
-The installation script automatically adds a cronjob to update the calendar every 5 minutes. If you need to add it manually, use:
-\`\`\`text
-*/5 * * * * cd $HOME/simple-calendar-display && ./venv/bin/python update_calendar.py
-\`\`\`
+### 4. Start the Application
+To run the Flask server in the background so it stays alive after you close the terminal:
+nohup ./venv/bin/python app.py > /dev/null 2>&1 &
 
-## Display Setup
-Point your signage player or browser to the Raspberry Pi's IP address on port \`8080\`. 
+---
 
-If using **Anthias**, simply add the local URL as a "Web Asset".
+## How to Access
+
+Once the server is running, you can access the calendar and the configuration page from any browser on your local network:
+
+* Calendar View: http://<your-pi-ip>:8080/
+* Settings GUI: http://<your-pi-ip>:8080/settings
+
+---
+
+## Project Structure
+* app.py – The Flask web server handling the routing and backend configuration.
+* index.html – The core frontend displaying the clock and calendar events.
+* config.json – Centralized storage for your customized text sizes and colors.
+* templates/settings.html – The web interface featuring sliders and color pickers.
 
 ## License
-This project is open source and available under the [MIT License](LICENSE).
-
-<p align="center">
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=sm7urw.simple-calendar-display" alt="visitor badge">
-</p>
-
-EOF
+This project is open-source and available under the MIT License.
