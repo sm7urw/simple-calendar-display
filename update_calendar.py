@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from icalevents.icalevents import events
 
 # Konfiguration
-ICAL_URL = "https://calendar.google.com/calendar/ical/154d3b9d01134c0d6a73e1e0aefefdf8d168c5cb2d10fc430544064bbbbe2d5f@group.calendar.google.com/public/basic.ics"
+from local_settings import ICAL_URL
 OUTPUT_FILE = "event.js"
 
 def fetch_next_event():

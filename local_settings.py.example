@@ -1,0 +1,2 @@
+# Kopiera denna fil till local_settings.py och fyll i din egen kalenderlänk
+ICAL_URL = "https://calendar.google.com/calendar/ical/YOUR_CALENDAR_ID/public/basic.ics"
