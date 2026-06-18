@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="slider-wrap">
                     Size: <span class="value-display" id="title_val">{{ config.title_size }}px</span>
-                    <input type="range" id="title_size" name="title_size" min="16" max="80" value="{{ config.title_size }}" oninput="document.getElementById('title_val').innerText = this.value + 'px'">
+                    <input type="range" id="title_size" name="title_size" min="0" max="80" value="{{ config.title_size }}" oninput="document.getElementById('title_val').innerText = this.value + 'px'">
                 </div>
                 <input type="color" name="title_color" value="{{ config.title_color or '#ffffff' }}" title="Choose color">
             </div>
@@ -67,7 +67,7 @@
             <div class="row">
                 <div class="slider-wrap">
                     Size: <span class="value-display" id="event_title_val">{{ config.event_title_size }}px</span>
-                    <input type="range" id="event_title_size" name="event_title_size" min="14" max="50" value="{{ config.event_title_size }}" oninput="document.getElementById('event_title_val').innerText = this.value + 'px'">
+                    <input type="range" id="event_title_size" name="event_title_size" min="14" max="150" value="{{ config.event_title_size }}" oninput="document.getElementById('event_title_val').innerText = this.value + 'px'">
                 </div>
                 <input type="color" name="event_title_color" value="{{ config.event_title_color or '#ffffff' }}" title="Choose color">
             </div>
@@ -78,7 +78,7 @@
             <div class="row">
                 <div class="slider-wrap">
                     Size: <span class="value-display" id="event_desc_val">{{ config.event_desc_size }}px</span>
-                    <input type="range" id="event_desc_size" name="event_desc_size" min="10" max="40" value="{{ config.event_desc_size }}" oninput="document.getElementById('event_desc_val').innerText = this.value + 'px'">
+                    <input type="range" id="event_desc_size" name="event_desc_size" min="10" max="140" value="{{ config.event_desc_size }}" oninput="document.getElementById('event_desc_val').innerText = this.value + 'px'">
                 </div>
                 <input type="color" name="event_desc_color" value="{{ config.event_desc_color or '#ffffff' }}" title="Choose color">
             </div>

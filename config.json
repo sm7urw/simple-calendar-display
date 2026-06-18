@@ -1,8 +1,8 @@
 {
-    "title_size": "31",
-    "clock_size": "48",
-    "event_title_size": "50",
-    "event_desc_size": "38",
+    "title_size": "0",
+    "clock_size": "70",
+    "event_title_size": "100",
+    "event_desc_size": "60",
     "title_color": "#ffffff",
     "clock_color": "#ffffff",
     "event_title_color": "#ffffff",
