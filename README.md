@@ -43,6 +43,8 @@ Once the server is running, you can access the calendar and the configuration pa
 * Calendar View: http://<your-pi-ip>:8080/
 * Settings GUI: http://<your-pi-ip>:8080/settings
 
+![Simple Calendar Display Settings Screenshot](simple-calendar-display-settings.png)
+
 ---
 
 ## Project Structure
